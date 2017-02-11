@@ -4,7 +4,7 @@ import (
 	"fmt"
 	_ "go/types"
 
-	"github.com/hyperledger/fabric_v06/core/chaincode/shim"
+	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
 // SimpleChaincode example simple Chaincode implementation
