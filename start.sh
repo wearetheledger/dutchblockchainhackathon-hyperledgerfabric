@@ -8,8 +8,6 @@ printf "\nCurrent directory: $DIR \n"
 
 clear_all()
 {
-    rm $BC/data/latest_deployed 2>/dev/null
-    printf "Latest deployed removed\n"
     rm -rf /var/hyperledger/production && rm -rf /tmp/keyValStore 2>/dev/null
     printf "keyValStore and var files removed\n"
     docker rm -f $(docker ps -a -q) 2>/dev/null
@@ -44,13 +42,10 @@ export CORE_PEER_ADDRESS="0.0.0.0:7051"
 $DIR/chaincode/chaincode &
 
 # start server, catch ctrl+c to clean up
-trap 'kill -TERM "$PID" 2>/dev/null' SIGINT
-export GOPATH=$GOPATH
-#export DEBUG=hfc
-npm start &
-PID=$!
-wait $PID
-
-clear_all
+read -n1 -r -p "Press space to continue..." key
+if [ "$key" = '' ]; then
+    echo "Stop the process"
+    clear_all
+fi
 
 exit 0
